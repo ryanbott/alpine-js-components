@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <!-- Alpine Plugins -->
+    <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine Core -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <title>Alpine test App</title>
+  </head>
+  <body
+    class="antialiased"
+    x-data="{'themeChoice': 'theme--purple'}"
+    x-init="
+    themeChoice = localStorage.getItem('themeChoice');
+    console.log('localStorage', localStorage.getItem('themeChoice'))
+    $watch(
+      'themeChoice', value => localStorage.setItem('themeChoice', value)
+    )"
+    :class="themeChoice"
+
+  >
+
+    <div
+      class="container mx-auto"
+    >
+
+    <fieldset>
+      <legend>theme options:
+        <p>
+          <span>Theme is: </span>
+          <span x-text="themeChoice"></span>
+        </p>
+      </legend>
+
+      <div>
+        <input type="radio" id="light" name="theme" value="light"
+        :value="themeChoice"
+        @change="
+          themeChoice = 'theme--light';
+          localStorage.setItem('themeChoice', JSON.stringify(themeChoice));
+        "
+        >
+        <label for="light">Light</label>
+      </div>
+
+      <div>
+        <input type="radio" id="purple" name="theme" value="purple"
+        :value="themeChoice"
+        @change="
+          themeChoice = 'theme--purple';
+          localStorage.setItem('themeChoice', themeChoice);
+        "
+
+         >
+        <label for="purple">Purple</label>
+      </div>
+
+      <div>
+        <input type="radio" id="oled" name="theme" value="oled"
+        :value="themeChoice"
+        @change="
+          themeChoice = 'theme--oled';
+          localStorage.setItem('themeChoice', JSON.stringify(themeChoice));
+        "
+
+        >
+        <label for="oled">OLED</label>
+      </div>
+    </fieldset>
+
+
+      <div class="hidden alpine-toggle-button my-8" x-data="{ darkMode: false }">
+        <h2>Alpine toggle pill</h2>
+        <p>
+          <span>dark mode is: </span>
+          <span x-text="darkMode"></span>
+        </p>
+        <!-- Toggle switch begins -->
+        <div class="flex justify-start items-center gap-2 mt-4 mb-10">
+          <span class="text-sm text-gray-800 dark:text-gray-500">Light</span>
+          <label for="toggle" class="w-10 h-6 flex items-center bg-gray-300 rounded-full px-1 py-2 cursor-pointer duration-300 ease-in-out dark:bg-gray-600">
+              <div
+                class="toggle-dot bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out"
+                :class="{'dark:translate-x-4': darkMode}"
+                ></div>
+          </label>
+          <span class="text-sm text-blue-400">Dark</span>
+          <input
+            id="toggle"
+            type="checkbox"
+            class="hidden"
+            :value="darkMode"
+            @change="darkMode = !darkMode"
+          />
+        </div>
+      <!-- Toggle switch ends -->
+      </div>
+
+
+
+      <div class="alpine-mask my-8">
+        <h2>Masking number inputs</h2>
+
+        <input x-mask="99/99/9999" placeholder="MM/DD/YYYY">
+        <input x-mask:dynamic="
+          $input.startsWith('34') || $input.startsWith('37')
+            ? '9999 999999 99999' : '9999 9999 9999 9999'"
+          placeholder="Credit card number">
+
+      </div>
+
+
+      <div
+        class="mb-10"
+        x-data="{ openMenu: false }"
+        x-cloak
+      >
+        <button
+          x-data="{ buttonText: 'Toggle Menu' }"
+          x-text="buttonText"
+          @click="openMenu = ! openMenu"
+        ></button>
+
+        <nav
+          class="px-4 bg-slate-800"
+          x-show="openMenu"
+          @click.outside="openMenu = false"
+          @keyup.escape="openMenu = false"
+          x-collapse.duration.300ms
+        >
+          <ul class="py-6 bg-red-300">
+            <li>home</li>
+            <li>about</li>
+            <li>blog</li>
+            <li>contact</li>
+          </ul>
+        </nav>
+    </div>
+
+
+      <h1
+        class="bg-blue-400 text-2xl"
+        x-data="{ message: 'I ❤️ Alpine x-text'}"
+        x-text="message"
+      >
+      </h1>
+
+      <div x-data="{ count: 0 }">
+        <button @click="count--">-</button>
+        <button @click="count++">+</button>
+
+        <span x-text="count"></span>
+      </div>
+
+
+      <section
+        class="hidden min-h-screen bg-green-400 text-white flex items-center justify-center overflow-x-hidden lg:overflow-x-visible"
+        x-data="carouselFilter()"
+      >
+        <div class="container grid grid-cols-1">
+          <div class="flex py-12 justify-center hidden">
+            <a
+              class="px-2 text-lg uppercase font-bold tracking-widest hover:text-white"
+              :class="{ 'text-gray-800': active != 0 }" href="#" @click.prevent="changeActive(0)"
+            >Fruit</a>
+            <a
+              class="px-2 text-lg uppercase font-bold tracking-widest hover:text-white"
+              :class="{ 'text-gray-700': active != 1 }" href="#" @click.prevent="changeActive(1)"
+            >People</a>
+          </div>
+
+          <div class="row-start-2 col-start-1"
+               x-show="active == 0"
+               x-transition:enter="transition transform ease-out duration-300"
+               x-transition:enter-start="opacity-0 scale-90"
+               x-transition:enter-end="opacity-100 scale-100"
+               x-transition:leave="transition transform ease-in duration-300"
+               x-transition:leave-start="opacity-100 scale-100"
+               x-transition:leave-end="opacity-0 scale-90"
+          >
+            <div class="grid grid-cols-1 grid-rows-1" x-data="carousel()" x-init="init()">
+              <div class="col-start-1 row-start-1 relative z-20 flex items-center justify-center pointer-events-none">
+
+                <h2 class="absolute text-5xl uppercase font-black tracking-widest"
+                    x-show="active == 0"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform translate-y-12"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    x-transition:leave="transition ease-out duration-300"
+                    x-transition:leave-start="opacity-100 transform translate-y-0"
+                    x-transition:leave-end="opacity-0 transform -translate-y-12"
+                >Dragon Fruit</h2>
+                <h2 class="absolute text-5xl uppercase font-black tracking-widest"
+                    x-show="active == 1"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform translate-y-12"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    x-transition:leave="transition ease-out duration-300"
+                    x-transition:leave-start="opacity-100 transform translate-y-0"
+                    x-transition:leave-end="opacity-0 transform -translate-y-12"
+                >Avocado</h2>
+                <h2 class="absolute text-5xl uppercase font-black tracking-widest"
+                    x-show="active == 2"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform translate-y-12"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    x-transition:leave="transition ease-out duration-300"
+                    x-transition:leave-start="opacity-100 transform translate-y-0"
+                    x-transition:leave-end="opacity-0 transform -translate-y-12"
+                >Mango</h2>
+                <h2 class="absolute text-5xl uppercase font-black tracking-widest"
+                    x-show="active == 3"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform translate-y-12"
+                    x-transition:enter-end="opacity-100 transform translate-y-0"
+                    x-transition:leave="transition ease-out duration-300"
+                    x-transition:leave-start="opacity-100 transform translate-y-0"
+                    x-transition:leave-end="opacity-0 transform -translate-y-12"
+                >Orange</h2>
+              </div>
+
+
+              <div
+                class="carousel"
+                style="height: 513px;"
+                x-ref="carousel"
+              >
+                <div class="w-3/5 px-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1581375221876-8f287f7cd2cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=770&q=80"
+                    loading="lazy">
+                </div>
+                <div class="w-3/5 px-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1581375279144-bb3b381c7046?ixlib=rb-1.2.1&auto=format&fit=crop&w=770&q=80"
+                    loading="lazy">
+                </div>
+                <div class="w-3/5 px-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1581375303816-4a17124934f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=770&q=80"
+                    loading="lazy">
+                </div>
+                <div class="w-3/5 px-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&auto=format&fit=crop&w=770&q=80"
+                    loading="lazy">
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+
+    </div>
+
+    <style>
+      .flickity-button {
+        background-color: red;
+        height: 3rem;
+        width: 3rem;
+        position: absolute;
+      }
+
+      .flickity-prev-next-button.prev {
+        left: 0;
+        top: 50%;
+      }
+      .flickity-prev-next-button.next {
+        right: 0;
+        top: 50%;
+      }
+    </style>
+
+    <script>
+      function carousel() {
+        return {
+          active: 0,
+          init() {
+            var flkty = new Flickity(this.$refs.carousel, {
+              wrapAround: true
+            });
+            flkty.on('change', i => this.active = i);
+          }
+        }
+      }
+
+      function carouselFilter() {
+        return {
+          active: 0,
+          changeActive(i) {
+            this.active = i;
+
+            this.$nextTick(() => {
+              let flkty = Flickity.data( this.$el.querySelectorAll('.carousel')[i] );
+              flkty.resize();
+
+              console.log(flkty);
+            });
+          }
+        }
+      }
+
+    </script>
+  </body>
+</html>
