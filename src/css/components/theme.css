@@ -1,0 +1,44 @@
+.theme {
+  &--light {
+    color: #222;
+    background-color: white;
+
+    input[type="text"] {
+      border: 1px solid aqua;
+      background-color: aqua;
+      color: aqua !important;
+    }
+  }
+
+
+  &--dark {
+    color: #fff;
+    background-color: #222;
+
+    input[type="text"] {
+      border: 1px solid #fff;
+      background-color: #fff;
+      color: #fff !important;
+    }
+  }
+
+  &--purple {
+    color: white;
+    background-color: rebeccapurple;
+
+    input[type="text"] {
+      border: 1px solid #e6e6e6;
+      color: white
+    }
+  }
+
+
+  &--oled {
+    color: #eee;
+    background-color: #000;
+  }
+
+
+}
+
+

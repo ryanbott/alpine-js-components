@@ -4,15 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="tailwind.css">
     <link rel="stylesheet" href="style.css">
     <!-- Alpine Plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-tooltip@1.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <!-- Alpine Core -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
 
 
     <title>Alpine test App</title>
@@ -31,7 +32,7 @@
   >
 
     <div
-      class="container mx-auto"
+      class="container mx-auto px-8"
     >
 
     <fieldset>
@@ -108,14 +109,16 @@
 
 
 
-      <div class="alpine-mask my-8">
+      <div class="alpine-mask my-8 flex flex-col gap-4">
         <h2>Masking number inputs</h2>
 
-        <input x-mask="99/99/9999" placeholder="MM/DD/YYYY">
-        <input x-mask:dynamic="
+        <input id="date" x-mask="99/99/9999" placeholder="MM/DD/YYYY">
+        <input id="credit-card" x-mask:dynamic="
           $input.startsWith('34') || $input.startsWith('37')
             ? '9999 999999 99999' : '9999 9999 9999 9999'"
           placeholder="Credit card number">
+        <input id="phone-number" x-mask="(999)999-9999" placeholder="(123)456-7890">
+        <input id="money" x-mask:dynamic="$money($input)" placeholder="$123.45">
 
       </div>
 
@@ -138,11 +141,11 @@
           @keyup.escape="openMenu = false"
           x-collapse.duration.300ms
         >
-          <ul class="py-6 bg-red-300">
-            <li>home</li>
-            <li>about</li>
-            <li>blog</li>
-            <li>contact</li>
+          <ul class="py-6">
+            <li><a href="#">home</a></li>
+            <li><a href="#">about</a></li>
+            <li><a href="#">blog</a></li>
+            <li><a href="#">contact</a></li>
           </ul>
         </nav>
     </div>
@@ -161,6 +164,29 @@
 
         <span x-text="count"></span>
       </div>
+
+
+
+      <section>
+        <h2>Two way data binding with x-modal</h2>
+        <div x-data="{ title: 'watch me change' }">
+          <p x-text="title"></p>
+          <input type="text" x-model="title" placeholder="your text goes here">
+        </div>
+      </section>
+
+      <section class="m-20">
+        <h2 class="text-2xl font-bold">Tool Tips</h2>
+        <div x-data="{ tooltipHover: 'Woo, so much more info!' }">
+          <button x-tooltip="tooltipHover">Hover for more info!</button>
+        </div>
+        <div x-data="{ tooltipHover: 'Woo, so much more clicky fun!' }">
+          <button x-tooltip.on.click="tooltipHover">CLICK ME for more info!</button>
+        </div>
+
+        <p>Thanks to https://github.com/ryangjchandler/alpine-tooltip</p>
+        <p>Themes and more customization at https://atomiks.github.io/tippyjs/v6/themes/</p>
+      </section>
 
 
       <section
@@ -264,6 +290,30 @@
         </div>
       </section>
 
+
+
+      <section class="todo">
+        <p>Still todo</p>
+        <ul>
+          <li>carousel</li>
+          <li>smooth accordion</li>
+          <li>modal</li>
+          <li>tooltip</li>
+          <li>intersection observer w/ transition</li>
+          <li>two-way data binding</li>
+          <li>simple animation w/ tailwind css classes</li>
+          <li>megamenu nav</li>
+          <li>form with disabled button</li>
+          <li>tabs component</li>
+          <li>keydown and key combos</li>
+          <li>toggle button</li>
+          <li>Color Picker</li>
+          <li>image lightbox w/ slider</li>
+          <li>Date picker</li>
+          <li>tooltip</li>
+          <li>tooltip</li>
+        </ul>
+      </section>
     </div>
 
     <style>
