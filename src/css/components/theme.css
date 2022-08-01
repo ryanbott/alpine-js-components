@@ -1,44 +1,38 @@
 .theme {
   &--light {
-    color: #222;
-    background-color: white;
 
-    input[type="text"] {
-      border: 1px solid aqua;
-      background-color: aqua;
-      color: aqua !important;
-    }
-  }
+    --text-1: #121212;
+    --text-2: #0070f3;
 
+    --bg-1: #fafafa;
+    --bg-2: #ddd;
 
-  &--dark {
-    color: #fff;
-    background-color: #222;
-
-    input[type="text"] {
-      border: 1px solid #fff;
-      background-color: #fff;
-      color: #fff !important;
-    }
+    --link-1: aqua;
+    --link-2: #535bf2;
   }
 
   &--purple {
-    color: white;
-    background-color: rebeccapurple;
+    --text-1: #eee;
+    --text-2: red;
 
-    input[type="text"] {
-      border: 1px solid #e6e6e6;
-      color: white
-    }
+    --bg-1: rebeccapurple;
+    --bg-2: darkmagenta;
+
+    --link-1: aqua;
+    --link-2: #535bf2;
   }
 
 
   &--oled {
-    color: #eee;
-    background-color: #000;
+    --text-1: #eee;
+    --text-2: #ccc;
+
+    --bg-1: #000;
+    --bg-2: #222;
+
+    --link-1: aqua;
+    --link-2: darkmagenta;
   }
-
-
 }
 
 
