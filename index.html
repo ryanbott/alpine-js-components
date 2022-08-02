@@ -200,6 +200,31 @@
       </section>
 
 
+      <section class="m-20 bg-gren-200" x-data="{ shown: false }" x-intersect="shown = true">
+        <div
+          x-show="shown"
+          x-transition.duration.1000ms.scale.90.opacity.50.origin.top
+        >
+          <h2 class="text-2xl font-bold">Tailwind CSS transitions</h2>
+          <div x-data="{ open: false }">
+            <button @click="open = ! open">Toggle</button>
+            <div
+                x-show="open"
+                x-transition:enter="transition ease-out duration-1000"
+                x-transition:enter-start="opacity-0 scale-90"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-50"
+            >
+              <p>s;klrgns kjrg skerjgskjer gs,ehjkr gshkejr gsher gkshe rgkseh rg</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
       <section
         class="hidden min-h-screen flex items-center justify-center overflow-x-hidden lg:overflow-x-visible"
         x-data="carouselFilter()"
@@ -306,21 +331,23 @@
       <section class="todo">
         <p class="font-bold">Still todo:</p>
         <ul>
-          <li>carousel</li>
-          <li>smooth accordion</li>
-          <li>modal</li>
-          <li>tooltip</li>
-          <li>intersection observer w/ transition</li>
-          <li>two-way data binding</li>
-          <li>simple animation w/ tailwind css classes</li>
-          <li>megamenu nav</li>
-          <li>form with disabled button</li>
-          <li>tabs component</li>
-          <li>keydown and key combos</li>
-          <li>toggle button</li>
-          <li>Color Picker</li>
-          <li>image lightbox w/ slider</li>
-          <li>Date picker</li>
+          <li class="">carousel</li>
+          <li class="">smooth accordion</li>
+          <li class="">modal</li>
+          <li class="line-through">theme toggle</li>
+          <li class="line-through">data masking</li>
+          <li class="line-through">tooltip</li>
+          <li class="line-through">intersection observer w/ transition</li>
+          <li class="line-through">two-way data binding</li>
+          <li class="line-through">simple animation w/ tailwind css classes</li>
+          <li class="">megamenu nav</li>
+          <li class="">form with disabled button</li>
+          <li class="">tabs component</li>
+          <li class="">keydown and key combos</li>
+          <li class="line-through">toggle button</li>
+          <li class="">Color Picker</li>
+          <li class="">image lightbox w/ slider</li>
+          <li class="">Date picker</li>
         </ul>
       </section>
     </div>
