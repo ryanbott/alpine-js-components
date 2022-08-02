@@ -10,12 +10,16 @@
     <script defer src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-tooltip@1.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/mask@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://unpkg.com/@alpinejs/intersect@3.x.x/dist/cdn.min.js"></script>
     <!-- Alpine Core -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 
-
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/perspective.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale-extreme.css" />
     <title>Alpine test App</title>
   </head>
   <body
@@ -175,17 +179,24 @@
         </div>
       </section>
 
-      <section class="m-20">
-        <h2 class="text-2xl font-bold">Tool Tips</h2>
-        <div x-data="{ tooltipHover: 'Woo, so much more info!' }">
-          <button x-tooltip="tooltipHover">Hover for more info!</button>
-        </div>
-        <div x-data="{ tooltipHover: 'Woo, so much more clicky fun!' }">
-          <button x-tooltip.on.click="tooltipHover">CLICK ME for more info!</button>
-        </div>
+      <section class="m-20 bg-gren-200" x-data="{ shown: false }" x-intersect="shown = true">
+        <div
+          x-show="shown"
+          x-transition.duration.300ms.scale.80.opacity.50.origin.bottom
+        >
+          <h2 class="text-2xl font-bold">Tool Tips</h2>
+          <div class="mb-10" x-data="{ tooltipHover: 'Woo, so much more info!' }">
+            <button x-tooltip="tooltipHover">Hover for more info!</button>
+          </div>
+          <div x-data="{ tooltipHover: 'Woo, so much more clicky fun!' }">
+            <button
+            x-tooltip.on.click.animation.scale.placement.top="tooltipHover"
+            >CLICK ME for more info!</button>
+          </div>
 
-        <p>Thanks to https://github.com/ryangjchandler/alpine-tooltip</p>
-        <p>Themes and more customization at https://atomiks.github.io/tippyjs/v6/themes/</p>
+          <p>Thanks to https://github.com/ryangjchandler/alpine-tooltip</p>
+          <p>Themes and more customization at https://atomiks.github.io/tippyjs/v6/themes/</p>
+        </div>
       </section>
 
 
@@ -293,7 +304,7 @@
 
 
       <section class="todo">
-        <p>Still todo</p>
+        <p class="font-bold">Still todo:</p>
         <ul>
           <li>carousel</li>
           <li>smooth accordion</li>
@@ -310,8 +321,6 @@
           <li>Color Picker</li>
           <li>image lightbox w/ slider</li>
           <li>Date picker</li>
-          <li>tooltip</li>
-          <li>tooltip</li>
         </ul>
       </section>
     </div>
